@@ -1,0 +1,19 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies", "renovate"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Track nginx modules pulled via wget by reading # renovate: comments above ENV lines",
+      "managerFilePatterns": [
+        "/^Dockerfile$/",
+        "/^Dockerfile\\.template$/"
+      ],
+      "matchStrings": [
+        "# renovate: datasource=(?<datasource>[a-z-]+) depName=(?<depName>[^\\s]+)( extractVersion=(?<extractVersion>[^\\s]+))?\\s+ENV \\w+ (?<currentValue>[^\\s]+)"
+      ]
+    }
+  ]
+}

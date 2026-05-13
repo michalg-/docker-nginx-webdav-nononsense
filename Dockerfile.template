@@ -13,8 +13,11 @@ LABEL maintainer="Daniel Graziotin, daniel@ineed.coffee"
 
 ARG NGINX_VER_ARG=%%NGINX_VERSION%%
 ENV NGINX_VER=$NGINX_VER_ARG 
+# renovate: datasource=github-tags depName=mid1221213/nginx-dav-ext-module extractVersion=^v(?<version>.*)$
 ENV NGINX_DAV_EXT_VER 4.0.1
+# renovate: datasource=github-tags depName=aperezdc/ngx-fancyindex extractVersion=^v(?<version>.*)$
 ENV NGINX_FANCYINDEX_VER 0.6.0
+# renovate: datasource=github-tags depName=openresty/headers-more-nginx-module extractVersion=^v(?<version>.*)$
 ENV HEADERS_MORE_VER 0.39
 
 ENV MAKE_THREADS 4
