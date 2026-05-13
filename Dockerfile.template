@@ -7,15 +7,15 @@
 #   Go buy something from [their Amazon.com wishlist](https://www.amazon.com/hz/wishlist/ls/2XJI6HVS09C4J
 #  Added fixes and tweaks.
 
-FROM lscr.io/linuxserver/baseimage-ubuntu:jammy AS builder
+FROM lscr.io/linuxserver/baseimage-ubuntu:noble AS builder
 
 LABEL maintainer="Daniel Graziotin, daniel@ineed.coffee"
 
 ARG NGINX_VER_ARG=%%NGINX_VERSION%%
 ENV NGINX_VER=$NGINX_VER_ARG 
 ENV NGINX_DAV_EXT_VER 4.0.1
-ENV NGINX_FANCYINDEX_VER 0.5.2
-ENV HEADERS_MORE_VER 0.38
+ENV NGINX_FANCYINDEX_VER 0.6.0
+ENV HEADERS_MORE_VER 0.39
 
 ENV MAKE_THREADS 4
 ENV DEBIAN_FRONTEND noninteractive
@@ -35,7 +35,7 @@ RUN apt-get update && \
   libssl-dev \
   libxml2-dev \
   libxslt1-dev \
-  mime-support \
+  media-types \
   wget \
   zlib1g-dev && \
   apt-get -y autoclean && \
@@ -97,7 +97,7 @@ RUN ./configure --prefix=/etc/nginx \
   --with-openssl-opt=no-nextprotoneg \
   --with-pcre \
   --with-pcre-jit \
-  --with-perl_modules_path=/usr/share/perl/5.26.1 \
+  --with-perl_modules_path=/usr/share/perl/5.38.2 \
   --with-perl=/usr/bin/perl \
   --with-poll_module \
   --with-select_module \
@@ -114,7 +114,7 @@ RUN ./configure --prefix=/etc/nginx \
 RUN make -j${MAKE_THREADS} && \
   make install
 
-FROM lscr.io/linuxserver/baseimage-ubuntu:jammy
+FROM lscr.io/linuxserver/baseimage-ubuntu:noble
 COPY --from=builder /etc/nginx /etc/nginx
 COPY --from=builder /usr/lib/nginx/modules/ /usr/lib/nginx/modules/
 COPY --from=builder /usr/sbin/nginx /usr/sbin/nginx
@@ -131,7 +131,7 @@ RUN apt-get update && \
   libssl-dev \
   libxml2-dev \
   libxslt1-dev \
-  mime-support \
+  media-types \
   zlib1g-dev && \
   apt-get -y autoclean && \
   rm -rf /var/lib/apt/lists/*
