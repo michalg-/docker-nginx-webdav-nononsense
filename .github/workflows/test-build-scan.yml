@@ -34,7 +34,7 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Trivy scan
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.36.0
         with:
           image-ref: nginx-webdav-nononsense:scan-target
           format: table
@@ -43,7 +43,7 @@ jobs:
           ignore-unfixed: false
 
       - name: Grype scan
-        uses: anchore/scan-action@v6
+        uses: anchore/scan-action@v7.4.0
         id: grype
         with:
           image: nginx-webdav-nononsense:scan-target
